@@ -1,9 +1,7 @@
-// Import express
-const express = require("express");
-// Import cors
-const cors = require('cors')
-
-const json = require('./test.json')
+import express, { Router } from "express";
+import cors from 'cors'
+import db from "./config/config.js"
+import router from "./routes/route.js";
 
 // Init express
 const app = express();
@@ -12,18 +10,17 @@ app.use(express.json());
 // use cors
 app.use(cors());
 
-const router = express.Router();
-
-const getJSON = async (req,res) => {
-    res.send(json);
-} 
-
-router.get('/test',getJSON )
-
-// use router
 app.use(router);
+// Testing database connection
+//  try {
+//    db.authenticate();
+//    console.log("Connection has been established successfully.");
+//  } catch (error) {
+//    console.error("Unable to connect to the database:", error);
+//  }
 
-const port = 5000;
+
+const port = 4000;
 // listen on port
 app.listen(port, () =>
   console.log(`Server running at http://localhost:${port}`)
