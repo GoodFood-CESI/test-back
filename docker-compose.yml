@@ -1,8 +1,31 @@
 services:
-  api:
-      build: .
+  api-authentification:
+      build: ./api-authentification
       ports:
         - "4000:4000"
+  api-gateway:
+      build: ./api-gateway
+      ports:
+        - "5000:5000"
+  mq:
+    container_name: mq
+    image: rabbitmq:3.8-management-alpine
+    env_file:
+      - ./mq/.env
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+    ports:
+      - 5673:5672
+      - 15673:15672
+    volumes:
+      - ./mq/data/:/var/lib/rabbitmq/
+      - ./mq/log/:/var/log/rabbitmq
+    networks:
+      - backend
+
   db:
       image: postgres
       restart: always
@@ -13,5 +36,8 @@ services:
       restart: always
       ports:
         - 8080:8080
-  
+
+networks:
+    backend:
+      driver: bridge
  

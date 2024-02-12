@@ -1,4 +1,4 @@
-FROM debian:10 AS api-nodejs
+FROM debian:10 AS api-gateway-nodejs
 
 RUN apt-get update -yq \
     && apt-get install curl gnupg -yq \
@@ -12,6 +12,6 @@ WORKDIR /app
 
 RUN npm install
 
-EXPOSE 4000
+EXPOSE 5000
 
 CMD node index

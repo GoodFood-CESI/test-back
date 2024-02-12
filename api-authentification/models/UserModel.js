@@ -12,9 +12,9 @@ const Utilisateur = db.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: DataTypes.STRING,
-    mail: DataTypes.STRING,
-    password: DataTypes.STRING,
+    name: {type: DataTypes.STRING,allowNull:false},
+    mail: {type: DataTypes.STRING,allowNull:false},
+    password: {type: DataTypes.STRING,allowNull:false},
   },
   {
     freezeTableName: true,
@@ -23,5 +23,8 @@ const Utilisateur = db.define(
   }
 );
 
+
+
+Utilisateur.sync();
 
 export default Utilisateur;
